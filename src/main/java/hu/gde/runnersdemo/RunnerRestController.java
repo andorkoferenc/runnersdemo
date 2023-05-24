@@ -47,6 +47,19 @@ public class RunnerRestController {
         return runnerRepository.findAll();
     }
 
+    @GetMapping("/avgage")
+    public double getAvgAge() {
+        List<RunnerEntity> runners = runnerRepository.findAll();
+        int totalAge = 0;
+        for (RunnerEntity runner : runners) {
+            totalAge += runner.getRunnerAge();
+        }
+        double avgAge = (double) totalAge / runners.size();
+        return avgAge;
+    }
+
+
+
     @PostMapping("/{id}/addlaptime")
     public ResponseEntity addLaptime(@PathVariable Long id, @RequestBody LapTimeRequest lapTimeRequest) {
         RunnerEntity runner = runnerRepository.findById(id).orElse(null);
